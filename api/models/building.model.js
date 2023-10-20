@@ -1,18 +1,27 @@
 const { DataTypes } = require('sequelize')
 const { sequelize } = require('../../database')
 
-const Address = sequelize.define(
-  'address',
+const Building = sequelize.define(
+  'building',
   {
-    street: {
+    name: {
       type: DataTypes.STRING,
       allowNull: false,
     },
-    number: {
+    address: {
       type: DataTypes.INTEGER,
     },
+    phoneNumber: {
+      type: DataTypes.STRING
+    },
+    providedServices: {
+      type: DataTypes.STRING
+    },
+    buildingManagerId: {
+      type: DataTypes.INTEGER
+    }
   },
   { timestamps: false }
 )
 
-module.exports = Address
+module.exports = Building
