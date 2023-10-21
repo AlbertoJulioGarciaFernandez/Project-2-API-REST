@@ -1,9 +1,9 @@
-const User = require('../api/models/user.model')
-const Classroom_Equipment = require('../api/models/classroom_equipment')
-const Booking = require('../api/models/booking.model')
-const Building = require('../api/models/building.model')
-const Classroom = require('../api/models/classroom.model')
-const Equipment = require('../api/models/equipment.model')
+const User = require('../api/models/user.model.js')
+const Classroom_Equipment = require('../api/models/classroom_equipment.js')
+const Booking = require('../api/models/booking.model.js')
+const Building = require('../api/models/building.model.js')
+const Classroom = require('../api/models/classroom.model.js')
+const Equipment = require('../api/models/equipment.model.js')
 
 function addRelationsToModels() {
   try {

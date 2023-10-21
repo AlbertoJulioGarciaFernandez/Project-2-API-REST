@@ -27,10 +27,11 @@ async function getOneUser(req, res) {
 }
 
 async function createUser(req, res) {
+	console.log(req.body);
 	try {
-		const user = await User.create({
-			firstName: req.body.firstName,
-		})
+		const user = await User.create(
+			req.body
+		)
 		return res.status(200).json({ message: 'User created', user: user })
 	} catch (error) {
 		res.status(500).send(error.message)

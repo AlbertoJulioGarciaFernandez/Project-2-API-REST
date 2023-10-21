@@ -4,11 +4,11 @@ const { sequelize } = require('../../database')
 const User = sequelize.define(
   'user',
   {
-    name: {
+    firstName: {
       type: DataTypes.STRING,
       allowNull: false,
     },
-    surname: {
+    lastName: {
       type: DataTypes.STRING
     },
     address: {

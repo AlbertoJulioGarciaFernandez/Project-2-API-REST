@@ -4,7 +4,7 @@ const { sequelize } = require('../../database')
 const Building = sequelize.define(
   'building',
   {
-    name: {
+    buildingName: {
       type: DataTypes.STRING,
       allowNull: false,
     },
