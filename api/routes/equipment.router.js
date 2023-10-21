@@ -1,10 +1,11 @@
-// const router = require('express').Router(),
-//     { addActorMovie, deleteActorMovie } = require('../controllers/movie.controller.js')
+const router = require('express').Router()
 
+const { getAllEquipments, getOneEquipment, createEquipment, updateEquipment, deleteEquipment } = require('../controllers/equipment.controller.js')
 
-    
-// // Iterations 2.3 and 2.4
-// router.put('/:movieId/actor/:actorId', addActorMovie);
-// router.delete('/:movieId/actor/:actorId', deleteActorMovie);
+router.get('/', getAllEquipments)
+router.get('/:id', getOneEquipment)
+router.post('/', createEquipment)
+router.put('/:id', updateEquipment)
+router.delete('/:id', deleteEquipment)
 
-// module.exports = router
+module.exports = router

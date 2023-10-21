@@ -1,68 +1,85 @@
-// const Actor = require('../models/actor.model.js'),
-//   Movie = require('../models/movie.model.js');
+const Equipment = require('../models/equipment.model.js'),
+  Equipment = require('../models/equipment.model.js');
 
-// // Iteration 2.2
-// // Add a actor to a movie
-// async function addActorMovie(req, res) {
-//   try {
-//     const movie = await Movie.findByPk(req.params.movieId),
-//       actor = await Actor.findByPk(req.params.actorId);
+  //users user
 
-//     if (movie) {
-//       if (actor) {
-//         const addActorMovie = await movie.addActor(actor);
+  async function getAllEquipments(req, res) {
+	try {
+		const equipment = await Equipment.findAll({ paranoid: false })
+		if (equipment) {
+			return res.status(200).json(equipment)
+		} else {
+			return res.status(404).send('No equipment found')
+		}
+	} catch (error) {
+		res.status(500).send(error.message)
+	}
+}
 
-//         // Checking whether the adding operation has been successful:
-//         if (addActorMovie) {
-//           return res.status(200).send(`The actor with id «${req.params.movieId}» has been successfully added to the movie whose id is «${req.params.actorId}»!`);
-//         } else {
-//           return res.status(400).send(`The actor with id «${req.params.movieId}» is already part of the cast in the movie whose id is «${req.params.actorId}».`);
-//         }
-        
-//       } else {
-//         return res.status(404).send(`No actor with id «${req.params.actorId}» found.`);
-//       }
-//     } else {
-//       return res.status(404).send(`No movie with id «${req.params.movieId}» found.`);
-//     }
+async function getOneEquipment(req, res) {
+	try {
+		const equipment = await Equipment.findByPk(req.params.id)
+		if (equipment) {
+			return res.status(200).json(equipment)
+		} else {
+			return res.status(404).send('Equipment not found')
+		}
+	} catch (error) {
+		res.status(500).send(error.message)
+	}
+}
 
+async function createEquipment(req, res) {
+	console.log(req.body);
+	try {
+		const equipment = await Equipment.create(
+			req.body
+		)
+		return res.status(200).json({ message: 'Equipment created', equipment: equipment })
+	} catch (error) {
+		res.status(500).send(error.message)
+	}
+}
 
-//   } catch (error) {
-//     return res.status(500).send(error.message);
-//   }
-// }
+async function updateEquipment(req, res) {
+	try {
+		const [equipmentExist, equipment] = await Equipment.update(req.body, {
+			returning: true,
+			where: {
+				id: req.params.id,
+			},
+		})
+		if (equipmentExist !== 0) {
+			return res.status(200).json({ message: 'Equipment updated', equipment: equipment })
+		} else {
+			return res.status(404).send('Equipment not found')
+		}
+	} catch (error) {
+		return res.status(500).send(error.message)
+	}
+}
 
-// // Iteration 2.3
-// // Remove and actor from a movie
-// async function deleteActorMovie(req, res) {
-//   try {
-//     const movie = await Movie.findByPk(req.params.movieId),
-//       actor = await Actor.findByPk(req.params.actorId);
+async function deleteEquipment(req, res) {
+	try {
+		const equipment = await Equipment.destroy({
+			where: {
+				id: req.params.id,
+			},
+		})
+		if (equipment) {
+			return res.status(200).json('Equipment deleted')
+		} else {
+			return res.status(404).send('Equipment not found')
+		}
+	} catch (error) {
+		return res.status(500).send(error.message)
+	}
+}
 
-//     if (movie) {
-//       if (actor) {
-//         const removeActorMovie = await movie.removeActor(actor);
-
-//         // Checking whether the removing operation has been successful:
-//         if (removeActorMovie) {
-//           return res.status(200).send(`The actor with id «${req.params.movieId}» has been deleted from the movie whose id is «${req.params.actorId}»`);
-//         } else {
-//           return res.status(404).send(`No actor with id «${req.params.actorId}» as part of the cast in movie with id «${req.params.movieId}».`);
-//         }
-
-//       } else {
-//         return res.status(404).send(`No actor with id «${req.params.actorId}» found.`);
-//       }
-//     } else {
-//       return res.status(404).send(`No movie with id «${req.params.movieId}» found.`);
-//     }
-
-//   } catch (error) {
-//     return res.status(500).send(error.message);
-//   }
-// }
-
-// module.exports = {
-//   addActorMovie,
-//   deleteActorMovie
-// }
+module.exports = {
+	getAllEquipments,
+	getOneEquipment,
+	createEquipment,
+	updateEquipment,
+	deleteEquipment
+}

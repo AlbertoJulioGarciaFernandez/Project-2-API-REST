@@ -1,18 +1,22 @@
 const { DataTypes } = require('sequelize')
 const { sequelize } = require('../../database')
 
-const Country = sequelize.define(
-  'country',
+const Classroom = sequelize.define(
+  'classroom',
   {
-    name: {
+    classroomName: {
       type: DataTypes.STRING,
       allowNull: false,
     },
-    population: {
-      type: DataTypes.INTEGER,
+    capacity: {
+      type: DataTypes.INTEGER
     },
+    aimenAt: {
+      type: DataTypes.ENUM('professor', 'student')
+    }
   },
   { timestamps: false }
 )
 
-module.exports = Country
+module.exports = Classroom
+

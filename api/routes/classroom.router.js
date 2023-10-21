@@ -1,12 +1,12 @@
-// const router = require('express').Router(),
-//     { } = require('../controllers/country.controller.js');
+const router = require('express').Router()
 
-// // Basic CRUD
-// router.get('/', getAllCountrie);
-// router.get('/:id', getOneCountry);
-// router.post('/', createCountry);
-// router.put('/:id', updateCountry);
-// router.delete('/:id', deleteCountry);
+const { getAllClassrooms, getOneClassroom, createClassroom, updateClassroom, deleteClassroom } = require('../controllers/classroom.controller.js')
 
-// module.exports = router;
+router.get('/', getAllClassrooms)
+router.get('/:id', getOneClassroom)
+router.post('/', createClassroom)
+router.put('/:id', updateClassroom)
+router.delete('/:id', deleteClassroom)
+
+module.exports = router
 

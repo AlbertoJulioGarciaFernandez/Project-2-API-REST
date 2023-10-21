@@ -1,21 +1,19 @@
 const { DataTypes } = require('sequelize')
 const { sequelize } = require('../../database')
 
-const Movie = sequelize.define(
-  'movie',
+const Equipment = sequelize.define(
+  'equipment',
   {
-    title: {
+    EquipmentName: {
       type: DataTypes.STRING,
       allowNull: false,
     },
-    genre: {
-      type: DataTypes.STRING,
-    },
-    rating: {
-      type: DataTypes.DECIMAL
-    }
-  },
+    description: {
+      type: DataTypes.STRING
+  }
+},
+
   { timestamps: false }
 )
 
-module.exports = Movie
+module.exports = Equipment
