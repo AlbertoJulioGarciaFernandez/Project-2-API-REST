@@ -1,15 +1,11 @@
-// const router = require('express').Router(),
-//     { getAllActors, getOneActor, createActor, updateActor, deleteActor, getActorMoviesLazy, getActorMoviesEager } = require('../controllers/actor.controller.js');
+const router = require('express').Router()
 
-// // Basic CRUD
-// router.get('/', getAllActors);
-// router.get('/:id', getOneActor);
-// router.post('/', createActor);
-// router.put('/:id', updateActor);
-// router.delete('/:id', deleteActor);
+const { getOneBooking, getAllBookings, createBooking, updateBooking, deleteBooking } = require('../controllers/booking.controller')
 
-// // Iteration 2.1
-// router.get('/:actorId/movies/lazy', getActorMoviesLazy);
-// router.get('/:actorId/movies/eager', getActorMoviesEager);
+router.get('/', getAllBookings)
+router.get('/:id', getOneBooking)
+router.post('/', createBooking)
+router.put('/:id', updateBooking)
+router.delete('/:id', deleteBooking)
 
-// module.exports = router;
+module.exports = router

@@ -1,18 +1,27 @@
 const { DataTypes } = require('sequelize')
 const { sequelize } = require('../../database')
 
-const Actor = sequelize.define(
-  'actor',
+const Booking = sequelize.define(
+  'booking',
   {
-    firstName: {
+    buildingName: {
       type: DataTypes.STRING,
       allowNull: false,
     },
-    lastName: {
+    address: {
       type: DataTypes.STRING,
+      allowNull: false,
     },
+    phoneNumber: {
+      type: DataTypes.INTEGER,
+      allowNull: false,
+    },
+    providedServices: {
+      type: DataTypes.STRING,
+      allowNull: false,
+    },        
   },
   { timestamps: false }
 )
 
-module.exports = Actor
+module.exports = Booking
