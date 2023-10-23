@@ -1,5 +1,4 @@
-const Equipment = require('../models/equipment.model.js'),
-  Equipment = require('../models/equipment.model.js');
+const Equipment = require('../models/equipment.model.js');
 
   //users user
 
