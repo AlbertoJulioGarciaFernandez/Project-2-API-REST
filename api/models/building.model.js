@@ -9,16 +9,13 @@ const Building = sequelize.define(
       allowNull: false,
     },
     address: {
-      type: DataTypes.INTEGER,
+      type: DataTypes.STRING,
     },
     phoneNumber: {
       type: DataTypes.STRING
     },
     providedServices: {
       type: DataTypes.STRING
-    },
-    buildingManagerId: {
-      type: DataTypes.INTEGER
     }
   },
   { timestamps: false }
