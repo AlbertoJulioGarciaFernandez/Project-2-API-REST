@@ -1,8 +1,8 @@
 const jwt = require('jsonwebtoken')
 const User = require('../models/user.model')
 
-function checkAuth(req, res, next) { //checkeamos autenticación, si el usuario está logueado y tiene token
-    if (!req.headers.authorization) return res.status(401).send('Token not found')  // comprobamos que nos envia el token en el req.headers
+function checkAuth(req, res, next) { // Proceso de autenticación: Comprobamos tanto si el usuario ha accedido con su usuario/contraseña y tiene clave «token»
+    if (!req.headers.authorization) return res.status(401).send('Token not found')  // Verificamos que nos envía la clave token en «req.headers»
 
     jwt.verify(req.headers.authorization, process.env.SECRET, async (err, result) => {
         if (err) return res.status(401).send('Token not valid')
@@ -16,7 +16,7 @@ function checkAuth(req, res, next) { //checkeamos autenticación, si el usuario 
     })
 }
 
-function checkAdmin(req, res, next) { //checkeamos autorización, si el usuario tiene acceso o no a un recurso
+function checkAdmin(req, res, next) { // Comprobamos si el usuario tiene acceso o no a un recurso en concreto (autorización):
     if (res.locals.user.role !== 'admin') {
         return res.status(401).send('User not authorized')
     } else {

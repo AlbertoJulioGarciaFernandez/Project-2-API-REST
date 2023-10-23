@@ -31,6 +31,16 @@ async function getOneUser(req, res) {
 	}
 }
 
+async function getProfile(req, res) {
+	try {
+		const user = await User.findByPk(res.locals.user.id)
+		if (!user) { res.status(500).send("User not found") }
+		res.status(200).json(user)
+	} catch (error) {
+		res.status(402).send(error.message)
+	}
+}
+
 async function createUser(req, res) {
 	try {
 		const user = await User.create(
@@ -93,6 +103,7 @@ async function deleteUser(req, res) {
 module.exports = {
 	getAllUsers,
 	getOneUser,
+	getProfile,
 	createUser,
 	updateUser,
 	deleteUser
