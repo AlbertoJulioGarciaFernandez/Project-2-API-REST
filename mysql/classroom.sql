@@ -1,4 +1,4 @@
-INSERT INTO `classrooms` (`id`, `classroomName`, `capacity`, `aimedAt`,`buildingId`,) VALUES
+INSERT INTO `classrooms` (`id`, `classroomName`, `capacity`, `aimedAt`,`buildingId`) VALUES
 ('1', 'Aula 101', 50, 'professor', 1),
 ('2', 'Aula 102', 40, 'student', 1),
 ('3', 'Aula 103', 60, 'professor', 1),
