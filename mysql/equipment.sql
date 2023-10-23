@@ -1,4 +1,4 @@
-INSERT INTO `equipments` (`id`, `equipmentName`, `description`) VALUES
+INSERT INTO `equipment` (`id`, `equipmentName`, `description`) VALUES
 ('1', 'Proyector', 'Proyector de alta definición para presentaciones en aulas'),
 ('2', 'Ordenador sobremesa', 'Ordenador con pantalla, teclado y ratón'),
 ('3', 'Pizarra Interactiva', 'Pizarra que permite la interacción digital en el aula'),
