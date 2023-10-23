@@ -1,0 +1,10 @@
+INSERT INTO `project_2_api_rest`.`bookings` (`id`,`quantity`) VALUES ('1',20);
+INSERT INTO `project_2_api_rest`.`bookings` (`id`,`quantity`) VALUES ('2',50);
+INSERT INTO `project_2_api_rest`.`bookings` (`id`,`quantity`) VALUES ('3',15);
+INSERT INTO `project_2_api_rest`.`bookings` (`id`,`quantity`) VALUES ('4',20);
+INSERT INTO `project_2_api_rest`.`bookings` (`id`,`quantity`) VALUES ('5',50);
+INSERT INTO `project_2_api_rest`.`bookings` (`id`,`quantity`) VALUES ('6',20);
+INSERT INTO `project_2_api_rest`.`bookings` (`id`,`quantity`) VALUES ('7',40);
+INSERT INTO `project_2_api_rest`.`bookings` (`id`,`quantity`) VALUES ('8',30);
+INSERT INTO `project_2_api_rest`.`bookings` (`id`,`quantity`) VALUES ('9',20);
+INSERT INTO `project_2_api_rest`.`bookings` (`id`,`quantity`) VALUES ('10', 50);
