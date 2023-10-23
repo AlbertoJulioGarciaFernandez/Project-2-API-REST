@@ -34,8 +34,7 @@ async function createBooking(req, res) {
 		const date = req.body.bookingDate,
 			time = req.body.bookingTime,
 			idClassroom = req.body.classroomId,
-			email = req.body.email,
-			bookingQuery = await Booking.findOne({
+			bookingExists = await Booking.findOne({
 				where: {
 					bookingDate: date,
 					bookingTime: time,
@@ -43,7 +42,9 @@ async function createBooking(req, res) {
 				}
 			});
 
-		if (bookingQuery === null) {
+		// Checking whether another user has booked the classroom
+		// at the same time and hour we want it to book it:
+		if (bookingExists === null) {
 
 			const user = await User.findByPk(res.locals.user.id)
 			const classroomQuery = await Classroom.findOne({
@@ -51,7 +52,7 @@ async function createBooking(req, res) {
 					id: idClassroom
 				}
 			});
-			console.log(user, classroomQuery)
+			
 			if (!classroomQuery) { res.status(405).send("no esxiste ese aula") }
 
 			if (classroomQuery.aimedAt === res.locals.user.role) {
