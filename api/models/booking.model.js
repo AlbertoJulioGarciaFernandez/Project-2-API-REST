@@ -4,22 +4,14 @@ const { sequelize } = require('../../database')
 const Booking = sequelize.define(
   'booking',
   {
-    buildingName: {
+    bookingDate: {
       type: DataTypes.STRING,
       allowNull: false,
     },
-    address: {
+    bookingTime: {
       type: DataTypes.STRING,
       allowNull: false,
-    },
-    phoneNumber: {
-      type: DataTypes.INTEGER,
-      allowNull: false,
-    },
-    providedServices: {
-      type: DataTypes.STRING,
-      allowNull: false,
-    },        
+    },       
   },
   { timestamps: false }
 )
