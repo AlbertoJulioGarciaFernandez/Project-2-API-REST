@@ -1,5 +1,5 @@
 const User = require('../api/models/user.model.js')
-const Classroom_Equipment = require('../api/models/classroom_Equipment.model.js')
+const Classroom_Equipment = require('../api/models/classroom_equipment.model.js')
 const Booking = require('../api/models/booking.model.js')
 const Building = require('../api/models/building.model.js')
 const Classroom = require('../api/models/classroom.model.js')

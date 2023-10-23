@@ -1,4 +1,4 @@
-const Classroom_Equipment = require('../models/classroom_Equipment.model.js')
+const Classroom_Equipment = require('../models/classroom_equipment.model.js')
 
 async function getAllClassroom_Equipments(req, res) {
 	try {

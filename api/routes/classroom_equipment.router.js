@@ -1,6 +1,6 @@
 const router = require('express').Router()
 
-const { getAllClassroom_Equipments, getOneClassroom_Equipment, createClassroom_Equipment, updateClassroom_Equipment, deleteClassroom_Equipment } = require('../controllers/classroom_Equipment.controller')
+const { getAllClassroom_Equipments, getOneClassroom_Equipment, createClassroom_Equipment, updateClassroom_Equipment, deleteClassroom_Equipment } = require('../controllers/classroom_equipment.controller')
 
 router.get('/', getAllClassroom_Equipments)
 router.get('/:id', getOneClassroom_Equipment)

@@ -31,14 +31,14 @@ async function login(req, res) {
 async function signup(req, res) {
 
     const saltRounds = bcrypt.genSaltSync(parseInt(process.env.SALTROUNDS))
-    console.log(saltRounds)
     const hashedPassword = bcrypt.hashSync(req.body.password, saltRounds)
     req.body.password = hashedPassword
     try {
         const user = await User.create(req.body)
         const payload = { email: user.email }
         const token = jwt.sign(payload, process.env.SECRET, { expiresIn: '1h' })
-        return res.status(200).json({ token })
+        // return res.status(200).json({ token })
+        return res.status(200).json({ message: 'User successfully created!', user: user, token: token })
 
     } catch (error) {
         res.status(500).send("Emails cannot be repeated")

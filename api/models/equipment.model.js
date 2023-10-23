@@ -4,7 +4,7 @@ const { sequelize } = require('../../database')
 const Equipment = sequelize.define(
   'equipment',
   {
-    EquipmentName: {
+    equipmentName: {
       type: DataTypes.STRING,
       allowNull: false,
     },

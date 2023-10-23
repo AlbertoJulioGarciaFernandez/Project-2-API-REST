@@ -2,7 +2,7 @@ const router = require('express').Router(),
     { getAllUsers, getOneUser, getProfile, createUser, updateUser, deleteUser } = require('../controllers/user.controller.js'),
     { checkAuth, checkAdmin } = require('../middleware');
 
-router.get('/', checkAuth, getAllUsers)
+router.get('/', checkAuth, checkAdmin, getAllUsers)
 router.get('/:id', getOneUser)
 router.get('/getProfile', checkAuth, getProfile)
 router.post('/', createUser)
