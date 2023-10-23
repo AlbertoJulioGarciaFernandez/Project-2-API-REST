@@ -110,7 +110,7 @@ async function updateBuilding(req, res) {
 				})
 
 				if (buildingUpdated !== 0) {
-					return res.status(200).json({ message: 'Building successfully updated!', building: building })
+					return res.status(200).send('Building successfully updated!')
 				} else {
 					return res.status(400).json({ message: 'Building cannot be updated. +Info: It already has those values!', building: building })
 				}
