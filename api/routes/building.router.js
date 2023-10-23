@@ -1,11 +1,10 @@
-// const router = require('express').Router(),
-//     { getAllAddresses, getOneAddress, createAddress, updateAddress, deleteAddress } = require('../controllers/address.controller.js');
+const router = require('express').Router(),
+    { getAllBuildings, getOneBuilding, createBuilding, updateBuilding, deleteBuilding } = require('../controllers/building.controller.js');
 
-// // Basic CRUD
-// router.get('/', getAllAddresses);
-// router.get('/:id', getOneAddress);
-// router.post('/', createAddress);
-// router.put('/:id', updateAddress);
-// router.delete('/:id', deleteAddress);
+router.get('/', getAllBuildings);
+router.get('/:id', getOneBuilding);
+router.post('/', createBuilding);
+router.put('/:id', updateBuilding);
+router.delete('/:id', deleteBuilding);
 
-// module.exports = router;
+module.exports = router;
