@@ -3,7 +3,7 @@ const Booking = require('../models/booking.model.js')
 async function getAllBookings(req, res) {
 	try {
 		const bookings = await Booking.findAll({ paranoid: false })
-		if (bookins) {
+		if (bookings) {
 			return res.status(200).json(bookings)
 		} else {
 			return res.status(404).send('No booking found')
