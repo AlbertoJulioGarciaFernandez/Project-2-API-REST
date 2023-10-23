@@ -2,7 +2,7 @@ const User = require('../models/user.model.js')
 const jwt = require('jsonwebtoken')
 const bcrypt = require('bcrypt')
 
-async function login(req, res){
+async function login(req, res) {
     try {
         const user = await User.findOne({
             where: {
@@ -28,8 +28,8 @@ async function login(req, res){
 }
 
 
-async function signup(req, res){
-    
+async function signup(req, res) {
+
     const saltRounds = bcrypt.genSaltSync(parseInt(process.env.SALTROUNDS))
     console.log(saltRounds)
     const hashedPassword = bcrypt.hashSync(req.body.password, saltRounds)
@@ -41,8 +41,8 @@ async function signup(req, res){
         return res.status(200).json({ token })
 
     } catch (error) {
-        res.status(500).send("email duplicado")
+        res.status(500).send("Emails cannot be repeated")
     }
 }
 
-module.exports = {signup, login }
+module.exports = { signup, login }

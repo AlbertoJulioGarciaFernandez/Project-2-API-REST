@@ -1,5 +1,5 @@
 const jwt = require('jsonwebtoken')
-const User = require('../models/user.model')
+const User = require('../models/user.model.js')
 
 function checkAuth(req, res, next) { // Proceso de autenticación: Comprobamos tanto si el usuario ha accedido con su usuario/contraseña y tiene clave «token»
     if (!req.headers.authorization) return res.status(401).send('Token not found')  // Verificamos que nos envía la clave token en «req.headers»

@@ -1,5 +1,6 @@
 const router = require('express').Router();
 
+router.use('/login', require('./auth.router.js'))
 router.use('/booking', require('./booking.router.js'));
 router.use('/building', require('./building.router.js'));
 router.use('/classroom', require('./classroom.router.js'));
