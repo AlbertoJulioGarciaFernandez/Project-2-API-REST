@@ -45,41 +45,40 @@ async function createBooking(req, res) {
 		// Checking whether another user has booked the classroom
 		// at the same time and hour we want it to book it:
 		if (bookingExists === null) {
-
-			const user = await User.findByPk(res.locals.user.id)
-			const classroomQuery = await Classroom.findOne({
+			// Now, it is time to check if the id provided for 
+			// the classroom belongs to an actual classroom in the
+			// database:
+			const classroomExists = await Classroom.findOne({
 				where: {
 					id: idClassroom
 				}
 			});
-			
-			if (!classroomQuery) { res.status(405).send("no esxiste ese aula") }
 
-			if (classroomQuery.aimedAt === res.locals.user.role) {
-				/* const booking = await Booking.create(
-					req.body
-				)
-				const [updateBooking] = await Booking.update(idUser, {
-					where: {
-						id: booking.dataValues.id
-					}
-				}) */
+			if (!classroomExists) { res.status(404).send('Classroom not found.') }
+
+			// In case the id exists, we check whether that classroom
+			// is aimed at users with the role of the current logged in user.
+			// Note that we use the «res.locals.user» variable, previously 
+			// retrieved in the checkAuth() function:
+			if (classroomExists.aimedAt === res.locals.user.role) {
+				// If his/her role matches the classroom's, his/her «id» will be
+				// stored in a new key (userId) in the body request, which we will
+				// be passsing on to the Booking.create() function, as shown:
 				req.body.userId = res.locals.user.id
 				const newBooking = await Booking.create(req.body)
 
-				return res.status(200).json({ message: 'Booking created', booking: newBooking })
-
-
+				return res.status(200).json({ message: 'Booking successfully created!', booking: newBooking })
 			} else {
-				return res.status(400).send('Booking cannot be created because your role is different')
+				return res.status(400).send(`Booking cannot be created. 
+				+Info: Your role is «${res.locals.user.role}» and this classroom 
+				is only for «${classroomExists.aimedAt}s».`)
 			}
-
-
 		} else {
-			return res.status(400).send('Booking cannot be created')
+			return res.status(400).send(`Booking cannot be created. 
+			+Info: There is already another booking with the same data 
+			(Date: ${date} - Time: ${time} - IDClassroom: ${idClassroom}) 
+			by another user.`)
 		}
-
-
 	} catch (error) {
 		res.status(500).send(error.message)
 	}
