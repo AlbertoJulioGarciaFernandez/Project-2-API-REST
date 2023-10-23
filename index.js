@@ -10,12 +10,8 @@ async function checkAndSyncPostgreSQL() {
   await checkConnection()
   addRelationsToModels()
 
-  // Important: Once all the models are synchronized, you don't 
-  // need to use synchronization anymore (when we have our database 
-  // table structures defined and do not want them to be modified, 
-  // we leave the parameter of synModels() empty):
-  await syncModels();
-  // await syncModels('alter')
+  // await syncModels()
+  await syncModels('alter')
 }
 
 function initializeAndListenWithExpress() {

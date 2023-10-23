@@ -11,7 +11,7 @@ const Classroom = sequelize.define(
     capacity: {
       type: DataTypes.INTEGER
     },
-    aimenAt: {
+    aimedAt: {
       type: DataTypes.ENUM('professor', 'student')
     }
   },
