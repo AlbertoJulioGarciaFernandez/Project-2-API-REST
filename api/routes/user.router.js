@@ -1,14 +1,15 @@
 const router = require('express').Router(),
-    { getAllUsers, getOneUser, getProfile, createUser, updateUser, deleteUser, deleteProfile } = require('../controllers/user.controller.js'),
+    { getAllUsers, getOneUser, getProfile, createUser, updateUser, deleteUser, updateProfile, updatePassword } = require('../controllers/user.controller.js'),
     { checkAuth, checkAdmin } = require('../middleware');
 
 router.get('/', checkAuth, checkAdmin, getAllUsers)
 router.get('/getProfile', checkAuth, getProfile)
 router.get('/:id', checkAuth, checkAdmin, getOneUser)
 router.post('/', createUser)
-router.put('/:id', checkAuth, updateUser)
-router.delete('/deleteProfile', checkAuth, deleteUser, deleteProfile) // For any user
-router.delete('/:id', checkAuth, checkAdmin, deleteUser) // For admins
+router.put('/updateProfile', checkAuth, updateProfile)
+router.put('/updatePassword', checkAuth, updatePassword)
+router.put('/:id', checkAuth, checkAdmin, updateUser)
+router.delete('/:id', checkAuth, checkAdmin, deleteUser)
 
 // router.get('/', checkAuth, checkAdmin, getAllUsers) // trae todos los registros del modelo - todos los usuarios
 // router.get('/getProfile', checkAuth, getProfile)
