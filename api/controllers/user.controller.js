@@ -132,8 +132,8 @@ async function updatePassword(req, res) {
 			} else {
 				// However, if they are different, the decrypted password will be encrypted and 
 				// then stored in the password body key:
-				const hashedPassword = bcrypt.hashSync(req.body.password, saltRounds),
-					saltRounds = bcrypt.genSaltSync(parseInt(process.env.SALTROUNDS));
+				const saltRounds = bcrypt.genSaltSync(parseInt(process.env.SALTROUNDS)),
+					hashedPassword = bcrypt.hashSync(req.body.password, saltRounds);
 				req.body.password = hashedPassword;
 				const payload = { email: res.locals.user.email },
 					token = jwt.sign(payload, process.env.SECRET, { expiresIn: '1h' }),
