@@ -1,4 +1,6 @@
-const User = require('../models/user.model.js')
+const User = require('../models/user.model.js'),
+	jwt = require('jsonwebtoken'),
+	bcrypt = require('bcrypt')
 
 async function getAllUsers(req, res) {
 	try {
@@ -119,9 +121,42 @@ async function updateProfile(req, res) {
 
 async function updatePassword(req, res) {
 	try {
+		const user = await User.findByPk(res.locals.user.id)
+		if (user) {
+			// compareSync function will be checking if the password the user passes 
+			// in the body request (decrypted) equals the password the user has stored
+			// in the database (encrypted):  
+			if (bcrypt.compareSync(req.body.password, user.password)) {
+				// After the process, if they are equal, the following message will be displayed:
+				return res.status(400).json({ message: 'Password cannot be updated. +Info: You already have that password!', user: user })
+			} else {
+				// However, if they are different, the decrypted password will be encrypted and 
+				// then stored in the password body key:
+				const hashedPassword = bcrypt.hashSync(req.body.password, saltRounds),
+					saltRounds = bcrypt.genSaltSync(parseInt(process.env.SALTROUNDS));
+				req.body.password = hashedPassword;
+				const payload = { email: res.locals.user.email },
+					token = jwt.sign(payload, process.env.SECRET, { expiresIn: '1h' }),
+					[passwordUpdated] = await User.update(req.body, {
+						where: {
+							id: res.locals.user.id
+						},
+					})
+
+				if (passwordUpdated !== 0) {
+					return res.status(200).json({ message: 'Your password has been successfully updated!', token: token })
+				} else {
+					return res.status(400).json({ message: 'Password cannot be updated. +Info: You already have that password!', user: user })
+				}
+			}
+
+		} else {
+			return res.status(404).send('User not found.')
+		}
+
 
 	} catch (error) {
-
+		return res.status(500).send(error.message)
 	}
 }
 

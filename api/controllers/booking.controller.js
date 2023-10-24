@@ -49,15 +49,18 @@ async function getMyBookings(req, res) {
 async function createBooking(req, res) {
 	try {
 		const date = req.body.bookingDate,
+			dateFormatted = req.body.bookingDate.split("/").reverse().join("-"),
 			time = req.body.bookingTime,
 			idClassroom = req.body.classroomId,
 			bookingExists = await Booking.findOne({
 				where: {
-					bookingDate: date,
+					bookingDate: dateFormatted,
 					bookingTime: time,
 					classroomId: idClassroom
 				}
 			});
+
+			
 
 		// Checking whether another user has booked the classroom
 		// at the same time and hour we want it to book it:
@@ -81,7 +84,13 @@ async function createBooking(req, res) {
 				// If his/her role matches the classroom's, his/her «id» will be
 				// stored in a new key (userId) in the body request, which we will
 				// be passsing on to the Booking.create() function, as shown:
-				req.body.userId = res.locals.user.id
+				req.body.userId = res.locals.user.id;
+				// Important: We have to store the date in the correct format in the 
+				// database (YYYY-MM-DD) so that, when the time comes to compare dates, 
+				// it is done correctly.
+				// To do so, the date format in the body request has to be converted to
+				// the proper format:
+				req.body.bookingDate = dateFormatted;
 				const newBooking = await Booking.create(req.body)
 
 				return res.status(200).json({ message: 'Booking successfully created!', booking: newBooking })
@@ -138,16 +147,18 @@ async function updateMyBooking(req, res) {
 				if (classroomExists.aimedAt === res.locals.user.role) {
 
 					const date = req.body.bookingDate,
+						dateFormatted = req.body.bookingDate.split("/").reverse().join("-"),
 						time = req.body.bookingTime,
 						bookingExists = await Booking.findOne({
 							where: {
-								bookingDate: date,
+								bookingDate: dateFormatted,
 								bookingTime: time,
 								classroomId: req.body.classroomId
 							}
 						});
 
 					if (bookingExists === null) {
+						req.body.bookingDate = dateFormatted;
 						const [bookingUpdated] = await Booking.update(req.body, {
 							where: {
 								id: req.params.id,
@@ -202,9 +213,9 @@ async function deleteBooking(req, res) {
 
 async function deleteBookings(req, res) {
 	try {
-		const startDate = new Date(req.query.startdate),
-			endDate = new Date(req.query.enddate);
-		console.log(startDate, endDate)
+		const startDate = req.query.startdate.split("/").reverse().join("-"),
+			endDate = req.query.enddate.split("/").reverse().join("-");
+
 		const booking = await Booking.destroy({
 			where: {
 				bookingDate: { [Op.between]: [startDate, endDate] },
@@ -216,7 +227,7 @@ async function deleteBookings(req, res) {
 			return res.status(404).send('Booking/s not found')
 		}
 	} catch (error) {
-		return res.status(600).send(req.query.startdate)
+		return res.status(500).send(error.message)
 	}
 }
 

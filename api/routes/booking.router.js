@@ -10,7 +10,7 @@ router.post('/', checkAuth, createBooking)
 router.post('/:id', checkAuth, checkAdmin, createBooking)
 router.put('/updateMyBooking/:id', checkAuth, updateMyBooking)
 router.put('/:id', checkAuth, checkAdmin, updateBooking)
-router.delete('/deleteBookings', checkAuth, deleteBookings)
-router.delete('/:id', deleteBooking)
+router.delete('/deleteBookings', checkAuth, checkAdmin, deleteBookings)
+router.delete('/:id', checkAuth, checkAdmin, deleteBooking)
 
 module.exports = router
