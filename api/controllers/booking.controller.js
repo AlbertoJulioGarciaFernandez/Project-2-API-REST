@@ -29,6 +29,24 @@ async function getOneBooking(req, res) {
 	}
 }
 
+async function getMyBookings(req, res) {
+	console.log(res.locals.user)
+	try {
+		const booking = await Booking.findAll({
+			where: {
+				userId: res.locals.user.id
+			}
+		})
+		if (booking) {
+			return res.status(200).json({ message: 'This/These is/are your booking/s', bookings: booking })
+		} else {
+			return res.status(404).send('Booking/s not found')
+		}
+	} catch (error) {
+		res.status(500).send(error.message)
+	}
+}
+
 async function createBooking(req, res) {
 	try {
 		const date = req.body.bookingDate,
@@ -122,6 +140,7 @@ async function deleteBooking(req, res) {
 module.exports = {
 	getAllBookings,
 	getOneBooking,
+	getMyBookings,
 	createBooking,
 	updateBooking,
 	deleteBooking
