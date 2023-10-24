@@ -1,7 +1,6 @@
 const Booking = require('../models/booking.model.js')
-const Building = require('../models/building.model.js')
 const Classroom = require('../models/classroom.model.js')
-const User = require('../models/user.model.js')
+const { Op } = require("sequelize")
 
 async function getAllBookings(req, res) {
 	try {
@@ -201,6 +200,26 @@ async function deleteBooking(req, res) {
 	}
 }
 
+async function deleteBookings(req, res) {
+	try {
+		const startDate = new Date(req.query.startdate),
+			endDate = new Date(req.query.enddate);
+		console.log(startDate, endDate)
+		const booking = await Booking.destroy({
+			where: {
+				bookingDate: { [Op.between]: [startDate, endDate] },
+			},
+		})
+		if (booking) {
+			return res.status(200).json('Booking/s deleted')
+		} else {
+			return res.status(404).send('Booking/s not found')
+		}
+	} catch (error) {
+		return res.status(600).send(req.query.startdate)
+	}
+}
+
 module.exports = {
 	getAllBookings,
 	getOneBooking,
@@ -208,5 +227,6 @@ module.exports = {
 	createBooking,
 	updateBooking,
 	updateMyBooking,
-	deleteBooking
+	deleteBooking,
+	deleteBookings
 }
