@@ -120,6 +120,70 @@ async function updateBooking(req, res) {
 	}
 }
 
+async function updateMyBooking(req, res) {
+	try {
+		const booking = await Booking.findByPk(req.params.id)
+		if (booking) {
+			// Checking whether the booking id the user has keyed in
+			// belongs to that actual user or to another, in which case
+			/// would not allow to make the update of the reservation:
+			if (booking.userId === res.locals.user.id) {
+				const classroomExists = await Classroom.findOne({
+					where: {
+						id: req.body.classroomId
+					}
+				});
+
+				if (!classroomExists) { res.status(404).send('Classroom not found.') }
+
+				if (classroomExists.aimedAt === res.locals.user.role) {
+
+					const date = req.body.bookingDate,
+						time = req.body.bookingTime,
+						bookingExists = await Booking.findOne({
+							where: {
+								bookingDate: date,
+								bookingTime: time,
+								classroomId: req.body.classroomId
+							}
+						});
+
+					if (bookingExists === null) {
+						const [bookingUpdated] = await Booking.update(req.body, {
+							where: {
+								id: req.params.id,
+							},
+						})
+
+						if (bookingUpdated !== 0) {
+							return res.status(200).send('Your booking has been successfully updated!')
+						} else {
+							return res.status(400).json({ message: 'Your booking cannot be updated. +Info: There is nothing to update!', booking: booking })
+						}
+					} else {
+						return res.status(400).send(`Booking cannot be updated. 
+							+Info: There is already another booking with the same data 
+							(Date: ${date} - Time: ${time} - IDClassroom: ${req.body.classroomId}) 
+							by another user.`)
+					}
+
+				} else {
+					return res.status(400).send(`Booking cannot be created. 
+						+Info: Your role is «${res.locals.user.role}» and this classroom 
+						is only for «${classroomExists.aimedAt}s».`)
+				}
+			} else {
+				return res.status(400).send('Booking cannot be updated. +Info: The booking id you have provided does not belong to any of your reservations.')
+			}
+		} else {
+			return res.status(404).send('Booking not found.')
+		}
+
+	} catch (error) {
+		return res.status(500).send(error.message)
+	}
+}
+
 async function deleteBooking(req, res) {
 	try {
 		const booking = await Booking.destroy({
@@ -143,5 +207,6 @@ module.exports = {
 	getMyBookings,
 	createBooking,
 	updateBooking,
+	updateMyBooking,
 	deleteBooking
 }
