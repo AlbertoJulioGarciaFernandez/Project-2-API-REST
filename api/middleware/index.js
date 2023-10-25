@@ -27,4 +27,25 @@ function checkAdmin(req, res, next) { // Checking if the user has access or not 
     }
 }
 
-module.exports = { checkAuth, checkAdmin }
+function getTodaysDate() {
+    // Getting the current date:
+    const date = new Date(),
+        year = date.getFullYear(),
+        month = date.getMonth() + 1,
+        day = date.getDate();
+
+    return `${year}-${month}-${day}`;
+}
+
+function validatePassword(pass) {
+    const regex = new RegExp(/[a-zA-Z0-9]{8}/);
+    
+    if (regex.test(pass)) {
+        return true;
+    } else {
+        return false;
+    }
+}
+
+
+module.exports = { checkAuth, checkAdmin, getTodaysDate, validatePassword }

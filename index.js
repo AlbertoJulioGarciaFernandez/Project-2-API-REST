@@ -31,4 +31,5 @@ async function startAPI() {
   initializeAndListenWithExpress()
 }
 
-startAPI()
+startAPI();
+
