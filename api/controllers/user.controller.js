@@ -131,7 +131,7 @@ async function updatePassword(req, res) {
 				return res.status(400).json({ message: 'Password cannot be updated. +Info: You already have that password!', user: user })
 			} else {
 				// However, if they are different, the decrypted password will be encrypted and 
-				// then stored in the password body key:
+				// then stored in the corresponding password key of the body section:
 				const saltRounds = bcrypt.genSaltSync(parseInt(process.env.SALTROUNDS)),
 					hashedPassword = bcrypt.hashSync(req.body.password, saltRounds);
 				req.body.password = hashedPassword;
