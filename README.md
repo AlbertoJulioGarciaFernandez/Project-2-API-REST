@@ -6,7 +6,7 @@ Aitor, Daniel and Alberto.
 **Project Idea**:
 The idea for the creation of this API came up from the need any school institution or, as in our particular case, any university, has to keep a record of all its students, professors, classrooms, and all the equipment involved. However, the thing which triggered the inspiration for this project was the fact of fulfilling the need teachers/professors and students may have when it comes to booking a classroom for a particular occasion, be it teaching, studying or giving a lecture. Each classroom has their particular equipment and will be addressed to professors or students, who will be able to book them if their role matches the one the classroom has.
 
-Another point that needs to be mentioned is the fact that the API also manages the buildings/faculties the university includes such as Engineering, Architecture, Maths, etc. — these can only be managed by one person, being a requirement having the role of building administrator to be able to do so.
+Another point that needs to be mentioned is the fact that the API also manages the buildings/faculties the university includes such as Engineering, Architecture, Maths, etc. —these can only be managed by one person, being a requirement having the role of building administrator to be able to do so—.
 
 **Roles**: 
 There are four roles involved:
