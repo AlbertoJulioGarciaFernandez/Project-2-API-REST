@@ -3,6 +3,9 @@
   "version": "1.0.0",
   "description": "**Team**: Aitor, Daniel and Alberto.",
   "main": "index.js",
+  "engines": {
+    "node": ">=18.18.0"
+  },
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
