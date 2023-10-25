@@ -4,30 +4,43 @@
 Aitor, Daniel and Alberto.
 
 **Project Idea**:
-This project consists of creating an API that facilitates the management of medical appointments for a veterinary clinic. The clinic will control the registration of owners and pets, appointments, treatment follow-up and the assignment of veterinarians. Owners will be able to request appointments for their pets, as well as consult their record at any time and the information of the veterinarians and treatments available at the clinic.
+The idea for the creation of this API came up from the need any school institution or, as in our particular case, any university, has to keep a record of all its students, professors, classrooms, and all the equipment involved. However, the thing which triggered the inspiration for this project was the fact of fulfilling the need teachers/professors and students may have when it comes to booking a classroom for a particular occasion, be it teaching, studying or giving a lecture. Each classroom has their particular equipment and will be addressed to professors or students, who will be able to book them if their role matches the one the classroom has.
 
-**Roles**: There will be 3 main roles:
-Admin: This role has full permissions. It can view, create, update and delete information from all tables.
-Teacher: This role can see all the information. Create, update and delete pets, owners, contact details, appointments. You can view vet and treatment information, but you can NOT create, update, or delete it.
-Student: This role can view all vet and treatment information. But you can only see your own appointments, pets and contact information (not other users). Likewise, you can only create, update and delete your own data. You have access to the information of all available appointments and the possibility to update the "status" field of the appointments when you select one to book for your pet, so that its status changes to "not available".
+Another point that needs to be mentioned is the fact that the API also manages the buildings/faculties the university includes such as Engineering, Architecture, Maths, etc. — these can only be managed by one person, being a requirement having the role of building administrator to be able to do so.
+
+**Roles**: 
+There are four roles involved:
+- API Administrator (admin)
+- Building Administrator (buildingAdmin)
+- Professor (professor)
+- Student (student)
+
+The difference between them lays on the fact that an API Administrator will have full permissions (this means, they are able to view, create, update and delete information from all tables).
+There is no remarkable difference between the rest of the roles apart from the fact that a building can only be assigned a person who actually is a building administrator, a professor can make classroom reservations as long as the class they are interested in is aimed at professors and the same for students.
 
 **Tables**:
-
+Our database needed six tables, being one of them the result of the many to many relation between other two tables:
+Bookings
+Buildings
+Classrooms
+Equipments
+Classrooms-Equipments (resulting table from the many to many relation between Classrooms and Equipments)
+Users
 
 **Relationships between tables**:
 
 One to one:
-Ref: "buildings"."buildingManagerId" - "users"."id"
+Buildings and Users
 
 One to many:
-Ref: "buildings"."id" < "classes"."idBuilding"
-Ref: "users"."id" < "bookings"."idUser"
-Ref: "classes"."id" < "bookings"."idClassroom"
-Ref: "classes"."id" < "classesEquipments"."idClass"
-Ref: "equipments"."id" < "classesEquipments"."idEquipment"
+Buildings and Classrooms
+Classrooms and Bookings
+Users and Bookings
+Classrooms  and Classrooms-Equipments
+Equipment and Classrooms-Equipments
 
 Many to many:
-Ref: classes <> equipments -- 
+Classrooms and Equipments
 
 **Authentication Endpoints**
 The Authentication flow for the application is: image
