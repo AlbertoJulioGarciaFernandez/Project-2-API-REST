@@ -9,7 +9,7 @@ const Booking = sequelize.define(
       type: DataTypes.STRING,
       allowNull: false,
       validate: { // Date validation
-        isAfter: { args: getTodaysDate(), msg: 'Must be a date greater than today' }
+        isAfter: { args: getTodaysDate(), msg: 'An error has occurred. +Info: The date must be a date greater than today\'s!' }
       }
     },
     bookingTime: {
