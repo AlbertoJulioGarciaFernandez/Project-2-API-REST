@@ -43,9 +43,9 @@ Many to many:
 Classrooms and Equipments
 
 **Authentication Endpoints**
-The Authentication flow for the application is: image
+The Authentication flow for the application is:
 
-Endpoints
+![Alt text](image.png)
 
 ### Auth Endpoints
 
