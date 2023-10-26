@@ -47,13 +47,59 @@ The Authentication flow for the application is: image
 
 Endpoints
 
-### Members Endpoints
+### User Endpoints
 
-| METHOD | ENDPOINT                  | TOKEN | ROLE  | DESCRIPTION                  | POST PARAMS                | RETURNS                              |
-| ------ | ------------------------- | ----- | ----- | ---------------------------- | -------------------------- | ------------------------------------ |
-| GET    | /members                  | YES   | Admin | Get all users                | -                          | [{ member }]                         |
-| GET    | /members/:memberId        | YES   | Members | Get one user               | member_id                  | { member }                           |
-| PUT    | /members/:memberId        | YES   | Members | Update user                | member_id                  | "Member updated"                     |
-| POST   | /members                  | YES   | Admin | Create one user              | req.body                   | "Member created"                     |
-| DELETE | /members/:memberId        | YES   | Members | Remove one user            | member_id                  | "Member deleted"                     |
+| METHOD | ENDPOINT                  | TOKEN | ROLE     | DESCRIPTION                  | POST PARAMS                | RETURNS                                                 |
+| ------ | ------------------------- | ----- | -------- | ---------------------------- | -------------------------- | ------------------------------------------------------  |
+| GET    | /user                     | YES   | Admin    | Get all users                | -                          | [{ user }]                                              |
+| GET    | /user/getProfile          | YES   | Student  | Get user profile             | -                          | { user }                                                |
+| GET    | /user/:id                 | YES   | Admin    | Get One User                 | user_id                    | { user }                                                |
+| POST   | /user                     | YES   | Admin    | Create One User              | req.body                   | {"User successfully created!", user }                   |
+| PUT    | /user/updateProfile       | YES   | Student  | Update user                  | member_id                  | "User successfully updated!"                            |
+| PUT    | /user/updatePassword      | YES   | Student  | Update Password User         | req.body                   | {"Your password has been successfully updated!", token} |
+| PUT    | /user/:id                 | YES   | Admin    | Update user                  | user_id                    | "User successfully updated!"                            |
+| DELETE | /user/:id                 | YES   | Admin    | Remove one user              | user_id                    | {'User successfully deleted!', user}                    |
 
+
+### Buildings Endpoints
+
+| METHOD | ENDPOINT                  | TOKEN | ROLE     | DESCRIPTION                  | POST PARAMS                | RETURNS                                                 |
+| ------ | ------------------------- | ----- | -------- | ---------------------------- | -------------------------- | ------------------------------------------------------  |
+| GET    | /buildings                | YES   | Admin    | Get all Buildings            | -                          | [{ building }]                                          |
+| GET    | /building/:id             | YES   | Admin    | Get One building             | building_id                | { building }                                            |
+| POST   | /building                 | YES   | Admin    | Create One building          | req.body                   | {"Building successfully created!", building }           |
+| PUT    | /building/:id             | YES   | Admin    | Update building              | building_id                | "Building successfully updated!"                        |
+| DELETE | /building/:id             | YES   | Admin    | Remove one building          | building_id                | {"Building successfuly deleted!", building}             |
+
+
+### Classroom Endpoints
+
+| METHOD | ENDPOINT                  | TOKEN | ROLE     | DESCRIPTION                   | POST PARAMS                | RETURNS                                                 |
+| ------ | ------------------------- | ----- | -------- | ----------------------------- | -------------------------- | ------------------------------------------------------  |
+| GET    | /classroom                | YES   | Admin    | Get All Classrooms            | -                          | [{ classroom }]                                         |
+| GET    | /classroom/:id            | YES   | Admin    | Get One Classroom             | classroom_id               | { classroom }                                           |
+| POST   | /classroom                | YES   | Admin    | Create One Classroom          | req.body                   | {"Classroom created", classroom }                       |
+| PUT    | /classroom/:id            | YES   | Admin    | Update Classroom              | classroom_id               | "Classroom updated"                                     |
+| DELETE | /classroom/:id            | YES   | Admin    | Remove one Classroom          | classroom_id               | "Classroom deleted"                                     |
+
+
+### Equipments Endpoints
+
+| METHOD | ENDPOINT                  | TOKEN | ROLE     | DESCRIPTION                   | POST PARAMS                | RETURNS                                                 |
+| ------ | ------------------------- | ----- | -------- | ----------------------------- | -------------------------- | ------------------------------------------------------  |
+| GET    | /equipment                | YES   | Admin    | Get All Equipment             | -                          | [{ equipment }]                                         |
+| GET    | /equipment/:id            | YES   | Admin    | Get One Equipment             | equipment_id               | { equipment }                                           |
+| POST   | /equipment                | YES   | Admin    | Create One Equipment          | req.body                   | {"Equipment created", equipment }                       |
+| PUT    | /equipment/:id            | YES   | Admin    | Update Equipment              | equipment_id               | {"Equipment updated", equipment }                       |
+| DELETE | /equipment/:id            | YES   | Admin    | Remove one Equipment          | equipment_id               | "Equipment deleted"                                     |
+
+
+### Equipments Endpoints
+
+| METHOD | ENDPOINT                                               | TOKEN | ROLE     | DESCRIPTION                        | POST/QUERY PARAMS          | RETURNS                                                 |
+| ------ | ------------------------------------------------------ | ----- | -------- | ---------------------------------- | -------------------------- | ------------------------------------------------------  |
+| GET    | /classroom_equipment                                   | YES   | Admin    | Get All Classroom_equipment        | -                          | [{ Classroom_equipment }]                               |
+| GET    | /classroom_equipment?idClassroom=classroomId           | YES   | Admin    | Get One Classroom equipment        | query params               | [{ Classroom_equipment }]                               |
+| GET    | /classroom_equipment?idEquipment=equipmentId           | YES   | Admin    | Get Equipment Classroom            | query params               | [{ Classroom_equipment }]                               |
+| POST   | /classroom_equipment                                   | YES   | Admin    | Create One Classroom_equipment     | post (req.body)            | {"Classroom_equipment created", Classroom_equipment }   |
+| DELETE | /classroom_equipment/idClassroom/:id/idEquipment/:id   | YES   | Admin    | Remove one Classroom_equipment     | equipment_id/classroom_id  | "Classroom_equipment deleted"                           |
