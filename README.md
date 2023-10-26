@@ -47,6 +47,14 @@ The Authentication flow for the application is: image
 
 Endpoints
 
+### Auth Endpoints
+
+| METHOD | ENDPOINT                  | TOKEN | ROLE     | DESCRIPTION                   | POST PARAMS                | RETURNS                                                 |
+| ------ | ------------------------- | ----- | -------- | ----------------------------- | -------------------------- | ------------------------------------------------------  |
+| POST   | /signup                   | NO    | Student  | Signup User                   | req.body                   | {"Equipment created", equipment }                       |
+| POST   | /login                    | NO    | Student  | Create User                   | req.body                   | {"User successfully created!", user, token}             |
+
+
 ### Users Endpoints
 
 | METHOD | ENDPOINT                  | TOKEN | ROLE     | DESCRIPTION                  | POST PARAMS                | RETURNS                                                 |
@@ -103,3 +111,18 @@ Endpoints
 | GET    | /classroom_equipment?idEquipment=equipmentId           | YES   | Admin    | Get Equipment Classroom            | query params               | [{ Classroom_equipment }]                               |
 | POST   | /classroom_equipment                                   | YES   | Admin    | Create One Classroom_equipment     | post (req.body)            | {"Classroom_equipment created", Classroom_equipment }   |
 | DELETE | /classroom_equipment/idClassroom/:id/idEquipment/:id   | YES   | Admin    | Remove one Classroom_equipment     | equipment_id/classroom_id  | "Classroom_equipment deleted"                           |
+
+### Bookings Endpoints
+
+| METHOD | ENDPOINT                  | TOKEN | ROLE     | DESCRIPTION                   | POST PARAMS                | RETURNS                                                            |
+| ------ | ------------------------- | ----- | -------- | ----------------------------- | -------------------------- | ------------------------------------------------------  |
+| GET    | /booking                | YES   | Admin    | Get All Bookings                | -                          | [{ bookings }]                                         |
+| GET    | /booking/:id            | YES   | Admin    | Get One Booking                 | booking_id                 | { booking }                                           |
+| GET    | /booking/getMyBookings  | YES   | Student    | Get User Bookings             | - (locals.user.id)         | { message: 'This/These is/are your booking/s', bookings: [{booking}] } |
+| POST   | /booking/:id                | YES   | Admin    | Create One Booking              | user_id                   | { message: 'Booking successfully created!', booking: booking }                       |
+| POST   | /booking                | YES   | Student   | Create One Booking              | req.body                   | { message: 'Booking successfully created!', booking: booking }               |
+| PUT    | /booking/:id            | YES   | Admin    | Update Booking                  | booking_id               | { message: 'Booking updated', booking: booking }                       |
+| PUT    | /booking/updateMyBooking/:id            | YES   | Student    | Update Booking                  | booking_id               | "Your booking has been successfully updated!"                     |
+| DELETE | /booking/:id            | YES   | Admin    | Remove one Booking              | booking_id               | "Booking deleted"                                     |
+| DELETE | /booking/deleteMyBooking/:id            | YES   | Student    | Remove one User Booking              | booking_id               | "Booking deleted"                                     |
+| DELETE | /booking/deleteBookings?startdate=startDate&enddate=endDate           | YES   | Admin    | Remove Bookings in a date range              | query params               | "Booking's deleted"                                     |

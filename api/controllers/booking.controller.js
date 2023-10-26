@@ -195,6 +195,27 @@ async function updateMyBooking(req, res) {
 }
 
 async function deleteBooking(req, res) {
+	// Future implementation: Add if statements which check booking existence (id booking).
+	// Look up updateMyBooking function above.
+	try {
+		const booking = await Booking.destroy({
+			where: {
+				id: req.params.id,
+			},
+		})
+		if (booking) {
+			return res.status(200).json('Booking deleted')
+		} else {
+			return res.status(404).send('Booking not found')
+		}
+	} catch (error) {
+		return res.status(500).send(error.message)
+	}
+}
+
+async function deleteMyBooking(req, res) {
+	// Future implementation: Add if statements which check booking existence (id booking) as well as if that booking belongs to the user requesting booking deletion.
+	// Look up updateMyBooking function above.
 	try {
 		const booking = await Booking.destroy({
 			where: {
@@ -239,5 +260,6 @@ module.exports = {
 	updateBooking,
 	updateMyBooking,
 	deleteBooking,
+	deleteMyBooking,
 	deleteBookings
 }
