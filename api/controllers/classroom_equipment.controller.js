@@ -2,7 +2,10 @@ const Classroom_Equipment = require('../models/classroom_equipment.model.js')
 
 async function getAllClassroom_Equipments(req, res) {
 	try {
-		const classroom_Equipment = await Classroom_Equipment.findAll({ paranoid: false })
+		const classroom_Equipment = await Classroom_Equipment.findAll({
+			where: req.query,
+			paranoid: false
+		})
 		if (classroom_Equipment) {
 			return res.status(200).json(classroom_Equipment)
 		} else {
