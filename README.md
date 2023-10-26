@@ -47,7 +47,7 @@ The Authentication flow for the application is: image
 
 Endpoints
 
-### User Endpoints
+### Users Endpoints
 
 | METHOD | ENDPOINT                  | TOKEN | ROLE     | DESCRIPTION                  | POST PARAMS                | RETURNS                                                 |
 | ------ | ------------------------- | ----- | -------- | ---------------------------- | -------------------------- | ------------------------------------------------------  |
@@ -72,7 +72,7 @@ Endpoints
 | DELETE | /building/:id             | YES   | Admin    | Remove one building          | building_id                | {"Building successfuly deleted!", building}             |
 
 
-### Classroom Endpoints
+### Classrooms Endpoints
 
 | METHOD | ENDPOINT                  | TOKEN | ROLE     | DESCRIPTION                   | POST PARAMS                | RETURNS                                                 |
 | ------ | ------------------------- | ----- | -------- | ----------------------------- | -------------------------- | ------------------------------------------------------  |
@@ -83,7 +83,7 @@ Endpoints
 | DELETE | /classroom/:id            | YES   | Admin    | Remove one Classroom          | classroom_id               | "Classroom deleted"                                     |
 
 
-### Equipments Endpoints
+### Equipment Endpoints
 
 | METHOD | ENDPOINT                  | TOKEN | ROLE     | DESCRIPTION                   | POST PARAMS                | RETURNS                                                 |
 | ------ | ------------------------- | ----- | -------- | ----------------------------- | -------------------------- | ------------------------------------------------------  |
@@ -94,7 +94,7 @@ Endpoints
 | DELETE | /equipment/:id            | YES   | Admin    | Remove one Equipment          | equipment_id               | "Equipment deleted"                                     |
 
 
-### Equipments Endpoints
+### Classroom-Equipment Endpoints
 
 | METHOD | ENDPOINT                                               | TOKEN | ROLE     | DESCRIPTION                        | POST/QUERY PARAMS          | RETURNS                                                 |
 | ------ | ------------------------------------------------------ | ----- | -------- | ---------------------------------- | -------------------------- | ------------------------------------------------------  |
