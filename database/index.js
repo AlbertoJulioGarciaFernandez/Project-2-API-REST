@@ -12,6 +12,7 @@ async function checkConnection() {
 	try {
 		await sequelize.authenticate()
 		console.log('Connection to DB has been established successfully.')
+		console.log(process.env.DB_NAME, process.env.DB_USER, process.env.DB_PASS, process.env.DB_HOST, process.env.DIALECT, process.env.DB_PORT);
 	} catch (error) {
 		throw error
 	}
