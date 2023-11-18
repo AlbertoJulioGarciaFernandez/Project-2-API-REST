@@ -33,7 +33,7 @@ async function signup(req, res) {
     try {
         if (!validatePassword(req.body.password)) {            
             // return res.status(400).send("Password not valid. +Info: It must contain, at least, eight characters.");
-            return res.status(400).send({dbname: process.env.DB_NAME, dbuser: process.env.DB_USER, dbpass: process.env.DB_PASS, dbhost: process.env.DB_HOST, dbdialect: process.env.DIALECT, dbport: process.env.DB_PORT});
+            return res.status(400).send({dbname: "process.env.DB_NAME, dbuser: process.env.DB_USER, dbpass: process.env.DB_PASS, dbhost: process.env.DB_HOST, dbdialect: process.env.DIALECT, dbport: process.env.DB_PORT"});
         } else {
             const saltRounds = bcrypt.genSaltSync(parseInt(process.env.SALTROUNDS))
             const hashedPassword = bcrypt.hashSync(req.body.password, saltRounds)
