@@ -59,9 +59,6 @@ async function createBooking(req, res) {
 					classroomId: idClassroom
 				}
 			});
-
-			
-
 		// Checking whether another user has booked the classroom
 		// at the same time and hour we want it to book it:
 		if (bookingExists === null) {
@@ -75,7 +72,6 @@ async function createBooking(req, res) {
 			});
 
 			if (!classroomExists) { res.status(404).send('Classroom not found.') }
-
 			// In case the id exists, we check whether that classroom
 			// is aimed at users with the role of the current logged in user.
 			// Note that we use the «res.locals.user» variable, previously 
@@ -92,7 +88,6 @@ async function createBooking(req, res) {
 				// the proper format:
 				req.body.bookingDate = dateFormatted;
 				const newBooking = await Booking.create(req.body)
-
 				return res.status(200).json({ message: 'Booking successfully created!', booking: newBooking })
 			} else {
 				return res.status(400).send(`Booking cannot be created. 

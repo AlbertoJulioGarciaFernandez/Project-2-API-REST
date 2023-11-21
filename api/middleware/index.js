@@ -37,17 +37,12 @@ function getTodaysDate() {
     return `${year}-${month}-${day}`;
 }
 
-function validatePassword(pass) {
-    // Our API will be only allowing passwords which include upper and lower case letters from the
-    // alphabet, numbers from zero to nine, and whose length equals eigth or more.
-    const regex = new RegExp(/[a-zA-Z0-9]{8}/);
-    
-    if (regex.test(pass)) {
-        return true;
-    } else {
-        return false;
-    }
-}
+function validatePassword(password) {
+    // Our API will be only allowing passwords whose length equals to eight or more characters including, at least, 
+    // one letter (either upper or lower case) and one number. It accepts any special character.
+    const regex = /^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d\S]{8,}$/;
+    return regex.test(password);
+  }
 
 
 module.exports = { checkAuth, checkAdmin, getTodaysDate, validatePassword }
