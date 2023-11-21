@@ -33,7 +33,7 @@ async function signup(req, res) {
       return res
         .status(400)
         .send(
-          "Password not valid. +Info: It must contain, at least, eight characters including a number and a letter (special characters permitted)."
+          "Password not valid. +Info: It must contain, at least, eight characters including a number and a letter (special characters are permitted)."
         );
     } else {
       const saltRounds = bcrypt.genSaltSync(parseInt(process.env.SALTROUNDS));
