@@ -27,15 +27,6 @@ function checkAdmin(req, res, next) { // Checking if the user has access or not 
     }
 }
 
-function getTodaysDate() {
-  const date = new Date(),
-    year = date.getFullYear(),
-    month = date.getMonth() + 1,
-    day = date.getDate();
-
-  return `${year}-${month}-${day}`;
-}
-
 function getYesterdaysDate() {
   const date = new Date();
   let yesterdaysYear, yesterdaysMonth, yesterdaysDay;
@@ -49,40 +40,6 @@ function getYesterdaysDate() {
   return `${yesterdaysYear}-${yesterdaysMonth}-${yesterdaysDay}`;
 }
 
-function getTodaysDay() {
-  const date = new Date(),
-    day = date.getDate();
-
-  return day;
-}
-
-function getCurrentHour() {
-  const d = new Date();
-  let hour = d.getHour();
-
-  return hour;
-}
-
-function getOpeningHour() {
-  return '08:00';
-}
-
-function getLastAvailableBookingHour() {
-  return '21:00';
-}
-
-function validateDayAndHour() {
-  const d = new Date(),
-    day = d.getDate(),
-    hour = d.getHours();
-
-  if (selectedDay === d.getDate() && selectedHour === d.getHours()) {
-    return false;
-  }
-
-  return true;
-}
-
 function validatePassword(password) {
     // Our API will be only allowing passwords whose length equals to eight or more characters including, at least, 
     // one letter (either upper or lower case) and one number. It accepts any special character.
@@ -93,12 +50,6 @@ function validatePassword(password) {
 module.exports = {
   checkAuth,
   checkAdmin,
-  getTodaysDate,
-  getTodaysDay,
   getYesterdaysDate,
-  getCurrentHour,
-  getLastAvailableBookingHour,
-  getOpeningHour,
   validatePassword,
-  validateDayAndHour,
 };
