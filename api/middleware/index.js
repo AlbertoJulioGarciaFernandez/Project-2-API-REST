@@ -34,15 +34,26 @@ function checkAdmin(req, res, next) {
   }
 }
 
-function getYesterdaysDate() {
+function getTodaysDate() {
   const date = new Date(),
     year = date.getFullYear(),
     month = date.getMonth() + 1,
-    // date.getDate() - 1 to allow users book a classroom on
-    // the current day they are performing this operation.
-    day = date.getDate() - 1;
+    day = date.getDate();
 
   return `${year}-${month}-${day}`;
+}
+
+function getYesterdaysDate() {
+  const date = new Date();
+  let yesterdaysYear, yesterdaysMonth, yesterdaysDay;
+
+  date.setDate(date.getDate() - 1);
+
+  (yesterdaysYear = date.getFullYear()),
+    (yesterdaysMonth = date.getMonth() + 1),
+    (yesterdaysDay = date.getDate());
+
+  return `${yesterdaysYear}-${yesterdaysMonth}-${yesterdaysDay}`;
 }
 
 function getTodaysDay() {
@@ -56,13 +67,15 @@ function getCurrentHour() {
   const d = new Date();
   let hour = d.getHour();
 
-  // A zero will be added at the beginning for hours before ten:
-  if (parseInt(hour) < 10) {
-    let formattedHour = "0" + hour;
-    return formattedHour;
-  }
-
   return hour;
+}
+
+function getOpeningHour() {
+  return '08:00';
+}
+
+function getLastAvailableBookingHour() {
+  return '21:00';
 }
 
 function validateDayAndHour() {
@@ -70,13 +83,11 @@ function validateDayAndHour() {
     day = d.getDate(),
     hour = d.getHours();
 
-
   if (selectedDay === d.getDate() && selectedHour === d.getHours()) {
     return false;
   }
 
   return true;
-
 }
 
 function validatePassword(password) {
@@ -89,9 +100,12 @@ function validatePassword(password) {
 module.exports = {
   checkAuth,
   checkAdmin,
-  getYesterdaysDate,
+  getTodaysDate,
   getTodaysDay,
+  getYesterdaysDate,
   getCurrentHour,
+  getLastAvailableBookingHour,
+  getOpeningHour,
   validatePassword,
-  validateDayAndHour
+  validateDayAndHour,
 };

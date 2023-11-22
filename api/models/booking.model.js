@@ -2,10 +2,16 @@ const { DataTypes } = require("sequelize"),
   { sequelize } = require("../../database"),
   {
     getYesterdaysDate,
-    getTodaysDay,
+    getTodaysDate,
     getCurrentHour,
     validateDayAndHour,
+    getLastAvailableBookingHour,
+    getOpeningHour,
   } = require("../middleware/index.js");
+
+// The following variable will be important to store
+// the date the user selects in the form:
+let selectedBookingDate;
 
 const Booking = sequelize.define(
   "booking",
@@ -14,6 +20,11 @@ const Booking = sequelize.define(
       type: DataTypes.STRING,
       allowNull: false,
       validate: {
+        // Getting the booking date the user selects in
+        // the form:
+        getBookingDate(bookingDate) {
+          selectedBookingDate = bookingDate;
+        },
         // Date validation
         isAfter: {
           args: getYesterdaysDate(),
@@ -25,24 +36,41 @@ const Booking = sequelize.define(
       type: DataTypes.STRING,
       allowNull: false,
       validate: {
-        validateDayAndHour(bookingDate) {
-          console.log(bookingDate);
+        validateDayAndHour(bookingTime) {
+          let formattedSelectedDay = selectedBookingDate.substring(
+              selectedBookingDate.length - 2,
+              selectedBookingDate.length
+            ),
+            formattedSelectedHour = bookingTime.substring(0, 2);
+
           const d = new Date(),
             day = d.getDate(),
             hour = d.getHours();
 
-          if (selectedDay === d.getDate() && selectedHour === d.getHours()) {
-            throw new Error('An error has occurred. +Info: The hour has to be greater than current\'s if the selected day equals today!');
+          // Nobody will be allowed to make a classroom reservation if the selected day equals today and
+          // the hour equals or precedes current's:
+          if (
+            (formattedSelectedDay === day.toString() &&
+              formattedSelectedHour === hour.toString()) ||
+            (formattedSelectedDay === day.toString() &&
+              formattedSelectedHour < hour.toString())
+          ) {
+            throw new Error(
+              "An error has occurred. +Info: The hour has to be greater than current's if the selected day equals today!"
+            );
           }
         },
-        // isAfter: {
-        //   args: getCurrentHour(),
-        //   msg: "An error has occurred. +Info: The chosen hour must be greater than currents!",
-        // },
-        // isBefore: {
-        //   args: "22",
-        //   msg: "An error has occurred. +Info: Classrooms cannot be booked after 21:00h!",
-        // },
+        // The following validation prevents users from making classroom reservations before 8.00 am or after 9.00 pm:
+        validateHour(bookingTime) {
+          if (
+            bookingTime.substring(0, 2) < "08" ||
+            bookingTime.substring(0, 2) > "21"
+          ) {
+            throw new Error(
+              "An error has occurred. +Info: Classrooms cannot be booked before 08.00h or after 21:00h!"
+            );
+          }
+        },
       },
     },
   },
