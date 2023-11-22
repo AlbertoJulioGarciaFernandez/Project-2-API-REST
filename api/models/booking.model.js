@@ -16,7 +16,7 @@ const Booking = sequelize.define(
       type: DataTypes.STRING,
       allowNull: false,
       validate: {
-        isAfter: {args: getCurrentHour(), msg: 'An error has occurred. +Info: The chosen hour must be greater than current\'s!' },
+        isAfter: {args: getCurrentHour(), msg: 'An error has occurred. +Info: The chosen hour must be greater than currents!' },
         isBefore: {args: '22', msg: 'An error has occurred. +Info: Classrooms cannot be booked after 21:00h!' },
       }
     },
