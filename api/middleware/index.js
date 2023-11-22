@@ -28,7 +28,6 @@ function checkAdmin(req, res, next) { // Checking if the user has access or not 
 }
 
 function getTodaysDate() {
-<<<<<<< HEAD
   const date = new Date(),
     year = date.getFullYear(),
     month = date.getMonth() + 1,
@@ -82,15 +81,6 @@ function validateDayAndHour() {
   }
 
   return true;
-=======
-    // Getting the current date:
-    const date = new Date(),
-        year = date.getFullYear(),
-        month = date.getMonth() + 1,
-        day = date.getDate();
-
-    return `${year}-${month}-${day}`;
->>>>>>> parent of 1fbea33 (Hour validation, implemented)
 }
 
 function validatePassword(password) {
@@ -100,7 +90,6 @@ function validatePassword(password) {
     return regex.test(password);
   }
 
-<<<<<<< HEAD
 module.exports = {
   checkAuth,
   checkAdmin,
@@ -113,7 +102,3 @@ module.exports = {
   validatePassword,
   validateDayAndHour,
 };
-=======
-
-module.exports = { checkAuth, checkAdmin, getTodaysDate, validatePassword }
->>>>>>> parent of 1fbea33 (Hour validation, implemented)
