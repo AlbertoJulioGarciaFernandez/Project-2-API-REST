@@ -35,7 +35,6 @@ function checkAdmin(req, res, next) {
 }
 
 function getYesterdaysDate() {
-  // Getting the current date:
   const date = new Date(),
     year = date.getFullYear(),
     month = date.getMonth() + 1,
@@ -44,6 +43,13 @@ function getYesterdaysDate() {
     day = date.getDate() - 1;
 
   return `${year}-${month}-${day}`;
+}
+
+function getTodaysDay() {
+  const date = new Date(),
+    day = date.getDate();
+
+  return day;
 }
 
 function getCurrentHour() {
@@ -59,6 +65,20 @@ function getCurrentHour() {
   return hour;
 }
 
+function validateDayAndHour() {
+  const d = new Date(),
+    day = d.getDate(),
+    hour = d.getHours();
+
+
+  if (selectedDay === d.getDate() && selectedHour === d.getHours()) {
+    return false;
+  }
+
+  return true;
+
+}
+
 function validatePassword(password) {
   // Our API will be only allowing passwords whose length equals to eight or more characters including, at least,
   // one letter (either upper or lower case) and one number. It accepts any special character.
@@ -70,6 +90,8 @@ module.exports = {
   checkAuth,
   checkAdmin,
   getYesterdaysDate,
+  getTodaysDay,
   getCurrentHour,
   validatePassword,
+  validateDayAndHour
 };
