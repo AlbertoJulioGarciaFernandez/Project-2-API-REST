@@ -1,6 +1,6 @@
 const { DataTypes } = require('sequelize'),
   { sequelize } = require('../../database'),
-  { getTodaysDate, getCurrentHour } = require('../middleware/index.js');
+  { getYesterdaysDate, getCurrentHour } = require('../middleware/index.js');
 
 const Booking = sequelize.define(
   'booking',
@@ -9,7 +9,7 @@ const Booking = sequelize.define(
       type: DataTypes.STRING,
       allowNull: false,
       validate: { // Date validation
-        isAfter: { args: getTodaysDate(), msg: 'An error has occurred. +Info: The chosen date must be greater than today\'s!' }
+        isAfter: { args: getYesterdaysDate(), msg: 'An error has occurred. +Info: The chosen date must be today or after today!' }
       }
     },
     bookingTime: {

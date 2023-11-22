@@ -34,12 +34,14 @@ function checkAdmin(req, res, next) {
   }
 }
 
-function getTodaysDate() {
+function getYesterdaysDate() {
   // Getting the current date:
   const date = new Date(),
     year = date.getFullYear(),
     month = date.getMonth() + 1,
-    day = date.getDate();
+    // date.getDate() - 1 to allow users book a classroom on
+    // the current day they are performing this operation.
+    day = date.getDate() - 1;
 
   return `${year}-${month}-${day}`;
 }
@@ -67,7 +69,7 @@ function validatePassword(password) {
 module.exports = {
   checkAuth,
   checkAdmin,
-  getTodaysDate,
+  getYesterdaysDate,
   getCurrentHour,
   validatePassword,
 };
