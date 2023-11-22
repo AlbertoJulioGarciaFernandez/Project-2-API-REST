@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 const { DataTypes } = require("sequelize"),
   { sequelize } = require("../../database"),
   {
@@ -12,6 +13,11 @@ const { DataTypes } = require("sequelize"),
 // The following variable will be important to store
 // the date the user selects in the form:
 let selectedBookingDate;
+=======
+const { DataTypes } = require('sequelize'),
+  { sequelize } = require('../../database'),
+  { getTodaysDate } = require('../middleware/index.js');
+>>>>>>> parent of 1fbea33 (Hour validation, implemented)
 
 const Booking = sequelize.define(
   "booking",
@@ -19,6 +25,7 @@ const Booking = sequelize.define(
     bookingDate: {
       type: DataTypes.STRING,
       allowNull: false,
+<<<<<<< HEAD
       validate: {
         // Getting the booking date the user selects in
         // the form:
@@ -31,10 +38,16 @@ const Booking = sequelize.define(
           msg: "An error has occurred. +Info: The chosen date must be today or after today!",
         },
       },
+=======
+      validate: { // Date validation
+        isAfter: { args: getTodaysDate(), msg: 'An error has occurred. +Info: The date must be a date greater than today\'s!' }
+      }
+>>>>>>> parent of 1fbea33 (Hour validation, implemented)
     },
     bookingTime: {
       type: DataTypes.STRING,
       allowNull: false,
+<<<<<<< HEAD
       validate: {
         validateDayAndHour(bookingTime) {
           let formattedSelectedDay = selectedBookingDate.substring(
@@ -72,6 +85,8 @@ const Booking = sequelize.define(
           }
         },
       },
+=======
+>>>>>>> parent of 1fbea33 (Hour validation, implemented)
     },
   },
   { timestamps: false }

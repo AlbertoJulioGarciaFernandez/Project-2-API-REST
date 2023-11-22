@@ -4,7 +4,7 @@
   "description": "**Team**: Aitor, Daniel and Alberto.",
   "main": "index.js",
   "engines": {
-    "node": ">=18.18.0"
+    "node": ">=18.17.1"
   },
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
