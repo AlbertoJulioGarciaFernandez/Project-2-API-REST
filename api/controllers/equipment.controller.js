@@ -43,22 +43,35 @@ async function updateEquipment(req, res) {
   try {
     const equipment = await Equipment.findByPk(req.params.id);
     if (equipment) {
-      const [equipmentUpdated] = await Equipment.update(req.body, {
-        returning: true,
-        where: {
-          id: req.params.id,
-        },
-      });
+      // Important: To get the number of records updated, we have to use destructuring
+      // like this:
+      const [equipmentExists, numPiecesOfEquipmentUpdated] =
+        await Equipment.update(req.body, {
+          returning: true,
+          where: {
+            id: req.params.id,
+          },
+        });
 
-	  if (equipmentUpdated !== undefined) {
+      if (numPiecesOfEquipmentUpdated > 0) {
         return res
           .status(200)
-          .send(`The piece of equipment with id ${req.params.id} has been successfully updated!`);
+          .send(
+            `The piece of equipment with id ${req.params.id} has been successfully updated!`
+          );
       } else {
-        return res.status(404).send({message: 'The piece of equipment cannot be updated. +Info: There is nothing to update!', equipment: equipment });
+        return res.status(404).send({
+          message:
+            "The piece of equipment cannot be updated. +Info: There is nothing to update!",
+          equipment: equipment,
+        });
       }
     } else {
-      return res.status(404).send(`The piece of equipment with id ${req.params.id} does not exist.`);
+      return res
+        .status(404)
+        .send(
+          `The piece of equipment with id ${req.params.id} does not exist.`
+        );
     }
   } catch (error) {
     return res.status(500).send(error.message);
