@@ -30,7 +30,6 @@ async function getOneClassroom_Equipment(req, res) {
 }
 
 async function createClassroom_Equipment(req, res) {
-	console.log(req.body);
 	try {
 		const classroom_Equipment = await Classroom_Equipment.create(
 			req.body

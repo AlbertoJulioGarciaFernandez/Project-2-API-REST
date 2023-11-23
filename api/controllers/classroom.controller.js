@@ -29,7 +29,6 @@ async function getOneClassroom(req, res) {
 }
 
 async function createClassroom(req, res) {
-	console.log(req.body);
 	try {
 		const classroom = await Classroom.create(
 			req.body
