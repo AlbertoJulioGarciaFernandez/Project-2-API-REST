@@ -97,12 +97,12 @@ async function createBooking(req, res) {
           booking: newBooking,
         });
       } else {
-        return res.status(400).send(`Booking cannot be created. 
+        return res.status(500).send(`Booking cannot be created. 
 				+Info: Your role is «${res.locals.user.role}» and this classroom 
 				is only for «${classroomExists.aimedAt}s».`);
       }
     } else {
-      return res.status(400).send(`Booking cannot be created. 
+      return res.status(500).send(`Booking cannot be created. 
 			+Info: There is already another booking with the same data 
 			(Date: ${date} - Time: ${time} - IDClassroom: ${idClassroom}) 
 			by another user.`);
