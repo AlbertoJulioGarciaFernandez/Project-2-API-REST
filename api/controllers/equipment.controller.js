@@ -8,7 +8,7 @@ async function getAllEquipments(req, res) {
     if (equipment) {
       return res.status(200).json(equipment);
     } else {
-      return res.status(404).send("No equipment found");
+      return res.status(404).send("No piece of equipment found on the database");
     }
   } catch (error) {
     res.status(500).send(error.message);
@@ -60,7 +60,7 @@ async function updateEquipment(req, res) {
             `The piece of equipment with id ${req.params.id} has been successfully updated!`
           );
       } else {
-        return res.status(404).send({
+        return res.status(500).send({
           message:
             "The piece of equipment cannot be updated. +Info: There is nothing to update!",
           equipment: equipment,
