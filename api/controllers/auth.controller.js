@@ -50,12 +50,10 @@ async function signup(req, res) {
       });
     }
   } catch (error) {
-    res
-      .status(500)
-      .send({
-        error: error.message,
-        msg: "Se ha producido un error al procesar su petición. +Info: Esto puede deberse a que el correo electrónico proporcionado ya exista en la base de datos, o por otra razón desconocida.",
-      });
+    res.status(500).send({
+      error: error.message,
+      msg: "Se ha producido un error al procesar su petición. +Info: Esto puede deberse a que el correo electrónico proporcionado ya exista en la base de datos, o por otra razón desconocida.",
+    });
   }
 }
 
