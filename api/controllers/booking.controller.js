@@ -170,7 +170,7 @@ async function updateMyBooking(req, res) {
           // made his/her reservation with the same provided data), the reservation should
           // not be made:
           if (thisSameBookingDataExists !== null) {
-            return res.status(400).send(`Booking cannot be updated. 
+            return res.status(500).send(`Booking cannot be updated. 
 							+Info: There is already another booking with the same data 
 							(Date: ${date} - Time: ${time} - IDClassroom: ${req.body.classroomId}) 
 							by another user.`);
@@ -189,7 +189,7 @@ async function updateMyBooking(req, res) {
                 .status(200)
                 .send("Your booking has been successfully updated!");
             } else {
-              return res.status(400).json({
+              return res.status(500).json({
                 message:
                   "Your booking cannot be updated. +Info: There is nothing to update!",
                 booking: booking,
@@ -197,13 +197,13 @@ async function updateMyBooking(req, res) {
             }
           }
         } else {
-          return res.status(400).send(`Booking cannot be created. 
+          return res.status(500).send(`Booking cannot be created. 
 						+Info: Your role is «${res.locals.user.role}» and this classroom 
 						is only for «${classroomExists.aimedAt}s».`);
         }
       } else {
         return res
-          .status(400)
+          .status(500)
           .send(
             "Booking cannot be updated. +Info: The booking id you have provided does not belong to any of your reservations."
           );
