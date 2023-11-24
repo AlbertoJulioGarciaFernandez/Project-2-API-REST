@@ -42,7 +42,7 @@ async function createBuilding(req, res) {
 
 				// If he/she exists, we control whether they are a building administrator:
 				if (user.dataValues.role !== 'buildingAdmin') {
-					res.status(400).json({ text: 'This user is not a building administrator.', user: user });
+					res.status(500).json({ text: 'This user is not a building administrator.', user: user });
 				} else {
 					const building = await Building.create(
 						req.body
@@ -85,7 +85,7 @@ async function updateBuilding(req, res) {
 				if (user) {
 					// If he/she exists, we control whether they are a building administrator:
 					if (user.dataValues.role !== 'buildingAdmin') {
-						res.status(400).json({ text: 'This user is not a building administrator.', user: user });
+						res.status(500).json({ text: 'This user is not a building administrator.', user: user });
 					} else {
 						const [buildingUpdated] = await Building.update(req.body, {
 							where: {
@@ -96,7 +96,7 @@ async function updateBuilding(req, res) {
 						if (buildingUpdated !== 0) {
 							return res.status(200).send('Building successfully updated!')
 						} else {
-							return res.status(400).json({ message: 'Building cannot be updated. +Info: It already has those values!', building: building })
+							return res.status(500).json({ message: 'Building cannot be updated. +Info: It already has those values!', building: building })
 						}
 					}
 				} else {
@@ -112,7 +112,7 @@ async function updateBuilding(req, res) {
 				if (buildingUpdated !== 0) {
 					return res.status(200).send('Buiflding successfully updated!')
 				} else {
-					return res.status(400).json({ message: 'Building cannot be updated. +Info: It already has those values!', building: building })
+					return res.status(500).json({ message: 'Building cannot be updated. +Info: It already has those values!', building: building })
 				}
 			}
 		} else {
