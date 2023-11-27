@@ -1,5 +1,6 @@
 const Booking = require("../models/booking.model.js");
 const Classroom = require("../models/classroom.model.js");
+const User = require("../models/user.model.js")
 const { Op } = require("sequelize");
 
 async function getAllBookings(req, res) {
@@ -49,6 +50,71 @@ async function getMyBookings(req, res) {
 }
 
 async function createBooking(req, res) {
+  try {
+    const user = await User.findByPk(req.params.id);
+    const date = req.body.bookingDate,
+      dateFormatted = req.body.bookingDate.split("/").reverse().join("-"),
+      time = req.body.bookingTime,
+      idClassroom = req.body.classroomId,
+      bookingExists = await Booking.findOne({
+        where: {
+          bookingDate: dateFormatted,
+          bookingTime: time,
+          classroomId: idClassroom,
+        },
+      });
+    // Checking whether another user has booked the classroom
+    // at the same time and hour we want it to book it:
+    if (bookingExists === null) {
+      // Now, it is time to check if the id provided for
+      // the classroom belongs to an actual classroom in the
+      // database:
+      const classroomExists = await Classroom.findOne({
+        where: {
+          id: idClassroom,
+        },
+      });
+
+      if (!classroomExists) {
+        res.status(404).send("Classroom not found.");
+      }
+      // In case the id exists, we check whether that classroom
+      // is aimed at users with the role of the current logged in user.
+      // Note that we use the «res.locals.user» variable, previously
+      // retrieved in the checkAuth() function:
+      if (classroomExists.aimedAt === user.role) {
+        // If his/her role matches the classroom's, his/her «id» will be
+        // stored in a new key (userId) in the body request, which we will
+        // be passsing on to the Booking.create() function, as shown:
+        req.body.userId = user.id;
+        // Important: We have to store the date in the correct format in the
+        // database (YYYY-MM-DD) so that, when the time comes to compare dates,
+        // it is done correctly.
+        // To do so, the date format in the body request has to be converted to
+        // the proper format:
+        req.body.bookingDate = dateFormatted;
+        const newBooking = await Booking.create(req.body);
+        return res.status(200).json({
+          message: "Booking successfully created!",
+          booking: newBooking,
+        });
+      } else {
+        return res.status(500).send(`Booking cannot be created. 
+				+Info: The user role is «${user.role}» and this classroom 
+				is only for «${classroomExists.aimedAt}s».`);
+      }
+    } else {
+      return res.status(500).send(`Booking cannot be created. 
+			+Info: There is already another booking with the same data 
+			(Date: ${date} - Time: ${time} - IDClassroom: ${idClassroom}) 
+			by another user.`);
+    }
+  } catch (error) {
+    res.status(500).send(error.message);
+  }
+}
+
+async function createMyBooking(req, res) {
   try {
     const date = req.body.bookingDate,
       dateFormatted = req.body.bookingDate.split("/").reverse().join("-"),
@@ -112,20 +178,108 @@ async function createBooking(req, res) {
   }
 }
 
+// async function updateBooking(req, res) {
+//   try {
+//     const [bookingExist, booking] = await Booking.update(req.body, {
+//       returning: true,
+//       where: {
+//         id: req.params.id,
+//       },
+//     });
+//     if (bookingExist !== 0) {
+//       return res
+//         .status(200)
+//         .json({ message: "Booking updated", booking: booking });
+//     } else {
+//       return res.status(404).send("Booking not found");
+//     }
+//   } catch (error) {
+//     return res.status(500).send(error.message);
+//   }
+// }
+
+
 async function updateBooking(req, res) {
   try {
-    const [bookingExist, booking] = await Booking.update(req.body, {
-      returning: true,
-      where: {
-        id: req.params.id,
-      },
-    });
-    if (bookingExist !== 0) {
-      return res
-        .status(200)
-        .json({ message: "Booking updated", booking: booking });
+    // First of all, we check whether there is a reservation
+    // with the id provided:
+    const booking = await Booking.findByPk(req.params.id);
+
+        // Buscar el usuario por su ID en la base de datos
+        const user = await User.findByPk(req.body.userId);
+    if (booking) {
+      // If the booking exists (this meaning that there is a
+      // reservation with the provided id), the next step will be
+      // to check whether the booking id the user has keyed in
+      // belongs to that actual user or to another, in which case
+      /// would not allow to make the update of the reservation:
+      if (booking.userId === user.id) {
+        const classroomExists = await Classroom.findOne({
+          where: {
+            id: req.body.classroomId,
+          },
+        });
+
+        if (!classroomExists) {
+          res.status(404).send("Classroom not found.");
+        }
+
+        if (classroomExists.aimedAt === user.role) {
+          const date = req.body.bookingDate,
+            dateFormatted = req.body.bookingDate.split("/").reverse().join("-"),
+            time = req.body.bookingTime,
+            thisSameBookingDataExists = await Booking.findOne({
+              where: {
+                bookingDate: dateFormatted,
+                bookingTime: time,
+                classroomId: req.body.classroomId,
+              },
+            });
+
+          // If the same booking data exists (this meaning that another user has previously
+          // made his/her reservation with the same provided data), the reservation should
+          // not be made:
+          if (thisSameBookingDataExists !== null) {
+            return res.status(500).send(`Booking cannot be updated. 
+							+Info: There is already another booking with the same data 
+							(Date: ${date} - Time: ${time} - IDClassroom: ${req.body.classroomId}) 
+							by another user.`);
+          } else {
+            // If the reservation data the user provided do not match any other user reservation,
+            // the reservation with the id provided via parameters should be updated with this data.
+            req.body.bookingDate = dateFormatted;
+            const [bookingUpdated] = await Booking.update(req.body, {
+              where: {
+                id: req.params.id,
+              },
+            });
+
+            if (bookingUpdated !== 0) {
+              return res
+                .status(200)
+                .send("The booking has been successfully updated!");
+            } else {
+              return res.status(500).json({
+                message:
+                  "Your booking cannot be updated. +Info: There is nothing to update!",
+                booking: booking,
+              });
+            }
+          }
+        } else {
+          return res.status(500).send(`Booking cannot be created. 
+						+Info: The user role is «${user.role}» and this classroom 
+						is only for «${classroomExists.aimedAt}s».`);
+        }
+      } else {
+        return res
+          .status(500)
+          .send(
+            "Booking cannot be updated. +Info: The booking id you have provided does not belong to any of your reservations."
+          );
+      }
     } else {
-      return res.status(404).send("Booking not found");
+      return res.status(404).send("Booking not found.");
     }
   } catch (error) {
     return res.status(500).send(error.message);
@@ -278,6 +432,7 @@ module.exports = {
   getAllBookings,
   getOneBooking,
   getMyBookings,
+  createMyBooking,
   createBooking,
   updateBooking,
   updateMyBooking,
