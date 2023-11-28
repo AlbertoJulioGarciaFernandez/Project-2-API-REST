@@ -77,6 +77,7 @@ async function createBuilding(req, res) {
 }
 
 async function updateBuilding(req, res) {
+  console.log(req);
   try {
     // Before trying to update the building, we have to
     // check in the database if it exists:
