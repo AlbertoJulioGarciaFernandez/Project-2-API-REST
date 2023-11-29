@@ -72,12 +72,15 @@ async function createBuilding(req, res) {
         });
     }
   } catch (error) {
-    res.status(500).send(error.message);
+    res.status(500)
+    .json({
+      error: error.message,
+      text: `The user with id ${req.body.userId} is already administrator of another building.`,
+    });
   }
 }
 
 async function updateBuilding(req, res) {
-  console.log(req);
   try {
     // Before trying to update the building, we have to
     // check in the database if it exists:
@@ -149,7 +152,11 @@ async function updateBuilding(req, res) {
       return res.status(404).send("Building not found.");
     }
   } catch (error) {
-    return res.status(500).send(error.message);
+    res.status(500)
+    .json({
+      error: error.message,
+      text: `The user with id ${req.body.userId} is already administrator of another building.`,
+    });
   }
 }
 
